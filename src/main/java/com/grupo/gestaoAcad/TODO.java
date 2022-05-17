@@ -15,7 +15,6 @@ public @interface TODO {
 /*TODO
  * Ajustar toString() da classe Funcionario com os campos da super classe
  *  Ajustar toString() da classe Aluno com os campos da super classe
- *  necessario criar status em classe processo
  *  Adicionar check se o processo inserido é valido.
  */
 }
