@@ -43,7 +43,20 @@ public class Sistema {
 	public void setListHistoricos(ArrayList<Historico> listHistoricos) {
 		this.listHistoricos = listHistoricos;
 	}
-	
-
+	public void adicionaAluno(Aluno aluno) {
+		this.listAlunos.add(aluno);
+	}
+	public void adicionaFuncionario(Funcionario funcionario) {
+		this.listFuncionarios.add(funcionario);
+	}
+	public void adicionaProcesso(Processo processo) {
+		this.listProcessos.add(processo);
+	}
+	public void adicionaSetor(Setor setor) {
+		this.listSetores.add(setor);
+	}
+	public void adicionaHistorico(Historico historico) {
+		this.listHistoricos.add(historico);
+	}
 	
 }

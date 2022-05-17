@@ -1,6 +1,5 @@
 package com.grupo.gestaoAcad;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -8,13 +7,10 @@ import java.util.stream.Collectors;
 public class Main {
 
 	public static void main(String[] args) {
-		List<Funcionario> funcionario = new ArrayList<>();
-		List<Aluno> aluno = new ArrayList<>();
-		List<Processo> processo = new ArrayList<>();
-		List<Setor> setores = new ArrayList<>();
-
-		setores.add(new Setor(123, "teste")); // remover depois
-		setores.add(new Setor(321, "etste")); // remover depois
+		Sistema sistema = new Sistema();
+		
+		sistema.adicionaSetor(new Setor(123, "teste")); // remover depois
+		sistema.adicionaSetor(new Setor(321, "etste")); // remover depois
 
 		Scanner sc = new Scanner(System.in);
 		String nome = " ";
@@ -45,7 +41,7 @@ public class Main {
 				telefone = sc.nextLine();
 				System.out.print("CPF: ");
 				cpf = sc.nextLine();
-				funcionario.add(new Funcionario(nome, cpf, email, telefone, numRegistro, cargo));
+				sistema.adicionaFuncionario(new Funcionario(nome, cpf, email, telefone, numRegistro, cargo));
 				cadOk = true;
 				break;
 
@@ -62,13 +58,13 @@ public class Main {
 				telefone = sc.nextLine();
 				System.out.print("CPF: ");
 				cpf = sc.nextLine();
-				aluno.add(new Aluno(nome, cpf, email, telefone, matriculaAluno, curso));
+				sistema.adicionaAluno(new Aluno(nome, cpf, email, telefone, matriculaAluno, curso));
 				cadOk = true;
 				break;
 
 			case 21:// Listas de Setores
 
-				for (Setor x : setores) {// mostra setores cadastrados
+				for (Setor x : sistema.getListSetores()) {// mostra setores cadastrados
 					System.out.println(x);
 				}
 
@@ -79,8 +75,7 @@ public class Main {
 				System.out.println("Digite o codigo do Setor: ");
 				int condsetor = sc.nextInt();
 				sc.nextLine();// Consumir resto da linha do nextInt
-				List<Processo> result = processo.stream().filter(x -> x.getSetorDestino() == condsetor)
-						.collect(Collectors.toList());
+				List<Processo> result = sistema.getListProcessos().stream().filter(x -> x.getSetorDestino() == condsetor).collect(Collectors.toList());
 				if (result == null) {// não funciona
 					System.out.println("Codigo de Setor Invalido");
 				}
@@ -92,8 +87,7 @@ public class Main {
 			case 30: // Consulta e Modificação de processos
 				System.out.print("Numero do Processo: ");
 				int numProcesso = sc.nextInt();
-				Processo selProcesso = processo.stream().filter(x -> x.getNumero() == numProcesso).findFirst()
-						.orElse(null);
+				Processo selProcesso = sistema.getListProcessos().stream().filter(x -> x.getNumero() == numProcesso).findFirst().orElse(null);
 				System.out.println(selProcesso);
 				System.out.println("1 - Alterar Status do Processo\n" + "2 - Alterar Setor do Processo");
 				int altProcesso = sc.nextInt();
@@ -117,13 +111,13 @@ public class Main {
 
 				break;
 			case 404: // remover depois, usado para verificar armzenamento dos arrayslists
-				for (Funcionario x : funcionario) {
+				for (Funcionario x : sistema.getListFuncionarios()) {
 					System.out.println(x);
 				}
-				for (Aluno x : aluno) {
+				for (Aluno x : sistema.getListAlunos()) {
 					System.out.println(x);
 				}
-				for (Processo x : processo) {
+				for (Processo x : sistema.getListProcessos()) {
 					System.out.println(x);
 				}
 				break;
@@ -133,12 +127,12 @@ public class Main {
 			if (cadOk == true) { // caso opção seja valida, após cadastro, realizar o cadastro do processo
 
 				int numProcesso = autoIncrement;
-				System.out.print("Qual eh a Finalidade do Processo? ");
+				System.out.print("Qual a Finalidade do Processo? ");
 				String finalidade = sc.nextLine();
 				System.out.println("Descricao do Processo: ");
 				String descricao = sc.nextLine();
 				System.out.println("Lista de setores:\n");
-				for (Setor x : setores) {// mostra setores cadastrados
+				for (Setor x : sistema.getListSetores()) {// mostra setores cadastrados
 					System.out.println(x);
 				}
 				System.out.print("Digite o codigo do setor destino: ");
@@ -146,7 +140,7 @@ public class Main {
 
 				sc.nextLine();// Consumir resto da linha do nextInt
 
-				processo.add(new Processo(numProcesso, finalidade, descricao, setorDestino));
+				sistema.adicionaProcesso(new Processo(numProcesso, finalidade, descricao, setorDestino));
 
 				autoIncrement++; // incrementa 1 a cada processo realizado
 
