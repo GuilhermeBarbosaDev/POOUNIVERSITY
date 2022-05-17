@@ -10,6 +10,7 @@ public class Processo {
 	private String descricao;
 	private String dataEntrada;
 	private int setorDestino;
+	private Boolean concluido;
 	private Date data = new Date();
 	
 	public Processo(int numero, String finalidade, String descricao, int setorDestino) {
@@ -18,6 +19,7 @@ public class Processo {
 		this.descricao = descricao;
 		this.dataEntrada = sdf1.format(data);
 		this.setorDestino = setorDestino;
+		this.concluido = false;
 		}
 	public int getNumero() {
 		return numero;
@@ -48,6 +50,16 @@ public class Processo {
 	}
 	public void setSetorDestino(int setorDestino) {
 		this.setorDestino = setorDestino;
+	}	
+	public Boolean estaConcluido() {
+		return concluido;
+	}
+	public void setStatus(Boolean concluido) {
+		this.concluido = concluido;
+	}
+	public String getStatus() {
+		return this.concluido == true ? "Concluido" : "Em analise";
+		
 	}
 	@Override
 	public String toString() {
@@ -55,8 +67,11 @@ public class Processo {
 				+ "\nFinalidade: " + finalidade 
 				+ "\nDescricao: " + descricao 
 				+ "\nData de Entrada: " + dataEntrada 
-				+ "\nSetor Destino: " + setorDestino;
+				+ "\nSetor Destino: " + setorDestino
+				+ "\nStatus do processo:" + this.getStatus();
 	}
+
+
 	
 	
 }

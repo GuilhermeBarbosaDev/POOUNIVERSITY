@@ -96,11 +96,9 @@ public class Main {
 					int aux = sc.nextInt();
 					sc.nextLine();// Consumir resto da linha do nextInt
 					if (aux == 1) {
-						// necessario status em classe processo
-						// selProcesso.setStatus(Em analise)???
+						selProcesso.setStatus(false);
 					} else if (aux == 2) {
-						// necessario status em classe processo
-						// selProcesso.setStatus(Em analise)???
+						selProcesso.setStatus(true);
 					}
 				}else if (altProcesso == 2) {
 					System.out.print("Digite o Codigo do Setor: ");
