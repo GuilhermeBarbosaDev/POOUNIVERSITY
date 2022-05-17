@@ -21,6 +21,12 @@ public class Setor {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+	@Override
+	public String toString() {
+		return 	"Nome Do Setor: " + nome
+				+ "\nCodigo Do Setor: " + codigo + "\n" ;
+	}
 	
 
 	

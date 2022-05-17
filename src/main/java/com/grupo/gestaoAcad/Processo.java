@@ -1,19 +1,23 @@
 package com.grupo.gestaoAcad;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Processo {
+	SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	private int numero;
 	private String finalidade;
 	private String descricao;
-	private Date dataEntrada;
-	private Setor setorDestino;
-	public Processo(int numero, String finalidade, String descricao, Date dataEntrada, Setor setorDestino) {
+	private String dataEntrada;
+	private int setorDestino;
+	private Date data = new Date();
+	
+	public Processo(int numero, String finalidade, String descricao, int setorDestino) {
 		this.numero = numero;
 		this.finalidade = finalidade;
 		this.descricao = descricao;
-		this.dataEntrada = dataEntrada;
-		this.setSetorDestino(setorDestino);
+		this.dataEntrada = sdf1.format(data);
+		this.setorDestino = setorDestino;
 		}
 	public int getNumero() {
 		return numero;
@@ -33,17 +37,26 @@ public class Processo {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public Date getDataEntrada() {
+	public String getDataEntrada() {
 		return dataEntrada;
 	}
-	public void setDataEntrada(Date dataEntrada) {
+	public void setDataEntrada(String dataEntrada) {
 		this.dataEntrada = dataEntrada;
 	}
-	public Setor getSetorDestino() {
+	public int getSetorDestino() {
 		return setorDestino;
 	}
-	public void setSetorDestino(Setor setorDestino) {
+	public void setSetorDestino(int setorDestino) {
 		this.setorDestino = setorDestino;
 	}
+	@Override
+	public String toString() {
+		return "\nNumero do Processo: " + numero 
+				+ "\nFinalidade: " + finalidade 
+				+ "\nDescricao: " + descricao 
+				+ "\nData de Entrada: " + dataEntrada 
+				+ "\nSetor Destino: " + setorDestino;
+	}
+	
 	
 }

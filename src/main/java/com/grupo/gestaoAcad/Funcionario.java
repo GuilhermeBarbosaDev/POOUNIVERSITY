@@ -1,20 +1,19 @@
 package com.grupo.gestaoAcad;
 
-import java.io.InputStream;
-
 public class Funcionario extends Pessoa {
-	private int numeroRegistro;
+	private String numeroRegistro;
 	private String cargo;
-	public Funcionario(String nome, String cpf, String email, String telefone, int numeroRegistro, String cargo) {
+	
+	public Funcionario(String nome, String cpf, String email, String telefone, String numeroRegistro, String cargo) {
 		super(nome, cpf, email, telefone);
 		this.numeroRegistro = numeroRegistro;
 		this.cargo = cargo;
 	}
 
-	public int getNumeroRegistro() {
+	public String getNumeroRegistro() {
 		return numeroRegistro;
 	}
-	public void setNumeroRegistro(int numeroRegistro) {
+	public void setNumeroRegistro(String numeroRegistro) {
 		this.numeroRegistro = numeroRegistro;
 	}
 	public String getCargo() {
@@ -23,6 +22,15 @@ public class Funcionario extends Pessoa {
 	public void setCargo(String cargo) {
 		this.cargo = cargo;
 	}
+
+	@Override
+	public String toString() {
+		return "Funcionario [numeroRegistro=" + numeroRegistro + ", cargo=" + cargo + ", nome=" + super.getNome() + "]";
+	}
+
+
+	
+	
 	
 	
 }

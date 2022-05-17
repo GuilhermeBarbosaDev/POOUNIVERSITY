@@ -10,7 +10,7 @@ public abstract class Pessoa {
 	private String telefone;
 	
 	
-	private List<String> listaPessoa = new ArrayList();
+	private List<String> listaPessoa = new ArrayList<String>();
 	
 	public void setPessoa(String novaPessoa) {
 		
@@ -49,4 +49,11 @@ public abstract class Pessoa {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Pessoa [nome=" + nome + ", cpf=" + cpf + ", email=" + email + ", telefone=" + telefone + "]";
+	}
+	
 }
