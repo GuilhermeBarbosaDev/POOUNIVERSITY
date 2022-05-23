@@ -1,5 +1,4 @@
 package com.grupo.gestaoAcad;
-
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -13,12 +12,11 @@ public class Main {
 
 		sistema.adicionaSetor(new Setor(123, "teste")); // remover depois
 		sistema.adicionaSetor(new Setor(321, "etste")); // remover depois
-
-		menu();
-
+		
+			menu();
+			
 		sc.close();
 	}
-
 	public static void menu() {
 
 		int numeroCad = 0;
@@ -33,9 +31,9 @@ public class Main {
 				int opcaocad = sc.nextInt();
 				sc.nextLine();// Consumir resto da linha do nextInt
 				if (opcaocad == 1) {
-					cadastro(numeroCad);
+					cadastroprof();
 				} else if (opcaocad == 2) {
-					checkcadastro(numeroCad);
+					checkprof();
 				}
 
 			} else if (numeroCad == 2) {// Cadastro aluno
@@ -43,9 +41,9 @@ public class Main {
 				int opcaocad = sc.nextInt();
 				sc.nextLine();// Consumir resto da linha do nextInt
 				if (opcaocad == 1) {
-					cadastro(numeroCad);
+					cadastroaluno();
 				} else if (opcaocad == 2) {
-					checkcadastro(numeroCad);
+					checkaluno();
 				}
 			} else if (numeroCad == 9) {
 				return;
@@ -56,14 +54,17 @@ public class Main {
 			int selecOpcoes = sc.nextInt();
 			sc.nextLine();// Consumir resto da linha do nextInt
 			if (selecOpcoes == 1) {
-				setor(1);
+				for (Setor x : sistema.getListSetores()) {// mostra setores cadastrados
+					System.out.println(x);
+				}
+				menu();
 			} else if (selecOpcoes == 2) {
-				setor(2);
+				processosetor();
 			} else if (selecOpcoes == 9) {
 				menu();
 			}
 		}else if (numeroMenu == 3) {
-			processo(2);
+			consprocesso();
 		} else if (numeroMenu == 9) {
 			return;
 		} else if (numeroMenu == 404) {// testar
@@ -75,8 +76,8 @@ public class Main {
 
 	}
 
-	public static void processo(int processo) {
-		if (processo == 1) {
+	public static void processo() {
+		
 			////// NOVO PROCESSO/////
 			int numProcesso = sistema.getListProcessos().size();
 			System.out.print("Qual a Finalidade do Processo? ");
@@ -91,8 +92,12 @@ public class Main {
 			int setorDestino = sc.nextInt();
 			sistema.adicionaProcesso(new Processo(numProcesso, finalidade, descricao, setorDestino));
 			System.out.println("Processo cadastrado com sucesso\n");
-
-		} else if (processo == 2) {
+			
+		sc.nextLine();// Consumir resto da linha do nextInt
+		menu();
+	}
+	public static void consprocesso() {
+		
 			//////// CONSULTA E MODIFICACAO DE PROCESSOS///////////////////////////
 			System.out.print("Numero do Processo: ");
 			int numProc = sc.nextInt();
@@ -102,7 +107,7 @@ public class Main {
 				System.out.println("Processo não encontrado");
 			}else {
 				System.out.println(selProcesso);
-			System.out.println("1 - Alterar Status do Processo\n" + "2 - Alterar Setor do Processo" + "9 - Sair");
+			System.out.println("1 - Alterar Status do Processo\n" + "2 - Alterar Setor do Processo\n" + "9 - Sair");
 			int altProcesso = sc.nextInt();
 			if (altProcesso == 1) {
 				System.out.println("1 - Em analise\n" + "2 - Concluido\n");
@@ -119,22 +124,17 @@ public class Main {
 			}else if (altProcesso == 9) {
 				menu();
 			}
-			}
 		}
 		sc.nextLine();// Consumir resto da linha do nextInt
 		menu();
 	}
-
-	public static void cadastro(int cadastro) {
+	public static void cadastroprof() {
 		String nome = " ";
 		String email = " ";
 		String telefone = " ";
 		String cpf = " ";
 		String numRegistro = " ";
-		String matriculaAluno = " ";
-
-		if (cadastro == 1) {
-			//////// CADASTRO PROFESSOR//////////////
+		
 			System.out.print("Numero de Registro: ");
 			numRegistro = sc.nextLine();
 			System.out.print("Nome: ");
@@ -149,9 +149,17 @@ public class Main {
 			cpf = sc.nextLine();
 			sistema.adicionaFuncionario(new Funcionario(nome, cpf, email, telefone, numRegistro, cargo));
 			// passar os dados do solicitante para o processo
-			processo(1);
-		} else if (cadastro == 2) {
-			// CADASTRO ALUNO/////////////
+			processo();
+		sc.nextLine();// Consumir resto da linha do nextInt
+		menu();
+	}
+	public static void cadastroaluno() {
+		String nome = " ";
+		String email = " ";
+		String telefone = " ";
+		String cpf = " ";
+		String matriculaAluno = " ";
+
 			System.out.print("Matricula: ");
 			matriculaAluno = sc.nextLine();
 			System.out.print("Nome: ");
@@ -166,17 +174,15 @@ public class Main {
 			cpf = sc.nextLine();
 			sistema.adicionaAluno(new Aluno(nome, cpf, email, telefone, matriculaAluno, curso));
 			// passar os dados do solicitante para o processo
-			processo(1);
-		}
+			processo();
+		
 		sc.nextLine();// Consumir resto da linha do nextInt
 		menu();
 	}
-
-	public static void checkcadastro(int checkcadastro) {
+	public static void checkprof() {
 		// verifica se o professor esta cadastrado
 		String checkCpf = "";
 
-		if (checkcadastro == 1) {
 			System.out.print("Numero de Registro: ");
 			String numReg = sc.nextLine();
 			System.out.print("Digite o CPF cadastrado: ");
@@ -185,13 +191,17 @@ public class Main {
 					.filter(x -> numReg.equals(x.getNumeroRegistro())).findFirst().orElse(null);
 			if (selFun != null && checkCpf.equals(selFun.getCpf())) {
 				// enviar selFun como parametro
-				processo(1);
+				processo();
 			} else {
 				System.out.println("Numero de Registro e/ou CPF incorreto ou nao cadastrado");
 			}
-		} else if (checkcadastro == 2) {
-			////////////////////////////////////////////////////////////////////////////
-			// verifica se o aluno esta cadastrado
+			
+		menu();
+	}
+	public static void checkaluno() {
+		// verifica se o aluno esta cadastrado
+		String checkCpf = "";
+		
 			System.out.print("Numero da Matricula: ");
 			String numMat = sc.nextLine();
 			System.out.print("Digite o CPF cadastrado: ");
@@ -200,22 +210,15 @@ public class Main {
 					.orElse(null);
 			if (selAluno != null && checkCpf.equals(selAluno.getCpf())) {
 				// enviar selFun como parametro
-				processo(1);
+				processo();
 			} else {
 				System.out.println("Numero de Registro e/ou CPF incorreto ou nao cadastrado");
 			}
-		}
+		
 		menu();
 	}
+	public static void processosetor() {
 
-	public static void setor(int setor) {
-
-		if (setor == 1) {
-
-			for (Setor x : sistema.getListSetores()) {// mostra setores cadastrados
-				System.out.println(x);
-			}
-		} else if (setor == 2) {
 			///////// LISTA DE PROCESSO POR SETOR///////////
 			System.out.println("Digite o codigo do Setor: ");
 			int condsetor = sc.nextInt();
@@ -229,10 +232,9 @@ public class Main {
 					System.out.println(x);
 				}
 			}
-		}
+		
 		menu();
 	}
-
 	public static void teste() {
 		// remover depois, usado para verificar armzenamento dos arrayslists
 		for (Funcionario x : sistema.getListFuncionarios()) {
@@ -249,4 +251,5 @@ public class Main {
 		}
 		menu();
 	}
+
 }
